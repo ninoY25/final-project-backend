@@ -1,6 +1,7 @@
 
 import mongoose from 'mongoose';
 const Contact = mongoose.model('contacts');
+const User = mongoose.model('user');
 
 /**
  * Throws error if error object is present.
@@ -54,4 +55,30 @@ export function get(contactId, callback) {
         callback(contact);
     };
     Contact.findById(contactId, resultCallback);
+};
+
+export function getUser(requestBody, callback){
+    let resultCallback = function (err,user){
+        throwError(err);
+        user = user[0];
+        callback(user);
+    }
+    User.find(requestBody, resultCallback);
+}
+
+export function getUserById(userId, callback){
+    let resultCallback = function (err,user){
+        throwError(err);
+        callback(user);
+    }
+    User.findById(userId, resultCallback);
+}
+
+export function saveUser(user, callback) {
+    let newUser = new User(user),
+        resultCallback = function (err, user) {
+            throwError(err);
+            callback(user);
+        };
+    newUser.save(resultCallback);
 };

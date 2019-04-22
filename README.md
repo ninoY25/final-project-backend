@@ -1,13 +1,12 @@
-# Assignment 8
+# Final project backend
 
 ## Description
 
-* Create back-end of address book
+* Create back-end of final project
 
 ## Installation
 
 * Use ```git clone``` command to download project
-```git@github.com:neu-mis-info6150-spring-2019/assignment-8-ninoY25.git```
 
 * Use ```npm install``` command to install node modules.
 
