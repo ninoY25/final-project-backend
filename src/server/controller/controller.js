@@ -4,7 +4,9 @@ import {
     save,
     getUser,
     saveUser,
-    getUserById
+    getUserById,
+    saveSteamApp,
+    getSteamApps
 } from '../service/service.js';
 
 export function list(request, response) {
@@ -77,3 +79,21 @@ export function autheticate(request, response) {
     }
 
 }
+
+export function addSteamApp(request, response){
+    // let newApp = Object.assign({}, request.body),
+    let callback = function (newApp) {
+        response.status(200);
+        response.json(newApp);
+    };
+    saveSteamApp(request.body, callback);
+}
+
+export function fetchSteamApp(request, response){
+    let callback = function (steamApp) {
+        response.status(200);
+        response.json(steamApp);
+    };
+    getSteamApps(request, callback);
+}
+

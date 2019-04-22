@@ -1,7 +1,7 @@
-
 import mongoose from 'mongoose';
 const Contact = mongoose.model('contacts');
 const User = mongoose.model('user');
+const SteamApp = mongoose.model('steamApps');
 
 /**
  * Throws error if error object is present.
@@ -57,8 +57,8 @@ export function get(contactId, callback) {
     Contact.findById(contactId, resultCallback);
 };
 
-export function getUser(requestBody, callback){
-    let resultCallback = function (err,user){
+export function getUser(requestBody, callback) {
+    let resultCallback = function (err, user) {
         throwError(err);
         user = user[0];
         callback(user);
@@ -66,8 +66,8 @@ export function getUser(requestBody, callback){
     User.find(requestBody, resultCallback);
 }
 
-export function getUserById(userId, callback){
-    let resultCallback = function (err,user){
+export function getUserById(userId, callback) {
+    let resultCallback = function (err, user) {
         throwError(err);
         callback(user);
     }
@@ -82,3 +82,24 @@ export function saveUser(user, callback) {
         };
     newUser.save(resultCallback);
 };
+
+export function getSteamApps(requestBody, callback) {
+    let resultCallback = function (error, apps) {
+        throwError(error);
+        callback(apps);
+    }
+    SteamApp.find({}, resultCallback);
+}
+
+export function saveSteamApp(app, callback) {
+
+    let newApps = [];
+    for (let a in app) {
+        newApps.push(app[a]);
+    }
+    let resultCallback = function (error, apps) {
+        throwError(error);
+        callback(apps);
+    }
+    SteamApp.collection.insertMany(newApps, resultCallback);
+}
