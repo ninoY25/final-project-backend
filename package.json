@@ -1,0 +1,27 @@
+{
+  "name": "assignment-8-ninoy25",
+  "version": "1.0.0",
+  "description": "assignment8",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && babel src -d dist",
+    "server": "node ./dist/server.js",
+    "start": "npm run build && npm run server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ninoY25/final-project-backend.git"
+  },
+  "author": "Yi Xie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ninoY25/final-project-backend/issues"
+  },
+  "homepage": "https://github.com/ninoY25/final-project-backend/#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.19"
+  }
+}
