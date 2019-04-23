@@ -13,7 +13,8 @@ import {
     getCarousels,
     saveGameDetail,
     getGameDetail,
-    getGameById
+    getGameById,
+    updateGame
 } from '../service/service.js';
 
 export function list(request, response) {
@@ -113,6 +114,14 @@ export function addGame(request, response) {
     saveGame(request.body, callback);
 }
 
+export function editGame(request, response){
+    let callback = function (game) {
+        response.status(200);
+        response.json(game);
+    };
+    updateGame(request.params._id,request.body,callback);
+}
+
 export function fetchGame(request, response) {
     let callback = function (steamApp) {
         response.status(200);
@@ -131,9 +140,23 @@ export function addCarousel(request, response) {
 }
 
 export function fetchCarousel(request, response) {
-    let callback = function (steamApp) {
+    let callback = function (games) {
         response.status(200);
-        response.json(steamApp);
+        let result = [];
+        for (let i =0; i< games.length;i++){
+            let resultObject = {};
+            resultObject.gameid = games[i]._id;
+            resultObject.game = games[i].name;
+            resultObject.titleimg = games[i].img;
+            resultObject.contentimg1 = games[i].img;
+            resultObject.contentimg2 = games[i].img1;
+            resultObject.contentimg3 = games[i].img2;
+            resultObject.contentimg4 = games[i].img3;
+            result.push(resultObject);
+        }
+        response.json(result);
+
+        // response.json(steamApp);
     };
     getCarousels(request, callback);
 }

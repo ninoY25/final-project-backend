@@ -5,6 +5,7 @@ import {
     addSteamApp,
     fetchSteamApp,
     addGame,
+    editGame,
     fetchGame,
     addCarousel,
     fetchCarousel,
@@ -31,6 +32,9 @@ export function routes(app) {
     app.route('/game')
         .post(addGame)
         .get(fetchGame);
+
+    app.route('/game/:_id')
+        .put(editGame);
 
     app.route('/game/detail/:_id')
         .get(fetchGameDetail);

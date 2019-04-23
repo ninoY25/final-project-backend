@@ -123,6 +123,14 @@ export function getGameById(id, callback) {
     Game.findById(id, resultCallback);
 }
 
+export function updateGame(id,old,callback){
+    let resultCallback = function (error, apps) {
+        throwError(error);
+        callback(apps);
+    }
+    Game.findOneAndUpdate({"_id": id},old,resultCallback);
+}
+
 export function saveGame(app, callback) {
 
     let newApps = [];
@@ -139,9 +147,10 @@ export function saveGame(app, callback) {
 export function getCarousels(requestBody, callback) {
     let resultCallback = function (error, apps) {
         throwError(error);
-        callback(apps);
+        callback(apps.slice(0,5));
     }
-    Carousel.find({}, resultCallback);
+    // Carousel.find({}, resultCallback);
+    Game.find({}, resultCallback);
 }
 
 export function saveCarousel(app, callback) {
@@ -176,3 +185,4 @@ export function saveGameDetail(detail, callback) {
         };
     newDetail.save(resultCallback);
 };
+
