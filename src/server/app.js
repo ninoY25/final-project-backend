@@ -3,6 +3,7 @@ import userModel from './model/user.js';
 import steamAppsModel from './model/steamApps.js';
 import gameModel from './model/game';
 import carsouelModel from './model/carousel';
+import gameDetailModel from './model/gamedetail';
 import {routes} from './routes/routes.js';
 
 export function run(app) {

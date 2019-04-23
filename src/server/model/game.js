@@ -16,6 +16,26 @@ let GameSchema = new Schema({
     name: {
         type: String,
         required: "required"
+    },
+    detail : {
+        type: String,
+        required: "required"
+    },
+    img1 : {
+        type: String,
+        required: "required"
+    },
+    img2 : {
+        type: String,
+        required: "required"
+    },
+    img3 : {
+        type: String,
+        required: "required"
+    },
+    price : {
+        type: String,
+        required: "required"
     }
 }, {
     versionKey: false

@@ -10,7 +10,10 @@ import {
     saveGame,
     getGames,
     saveCarousel,
-    getCarousels
+    getCarousels,
+    saveGameDetail,
+    getGameDetail,
+    getGameById
 } from '../service/service.js';
 
 export function list(request, response) {
@@ -84,7 +87,7 @@ export function autheticate(request, response) {
 
 }
 
-export function addSteamApp(request, response){
+export function addSteamApp(request, response) {
     // let newApp = Object.assign({}, request.body),
     let callback = function (newApp) {
         response.status(200);
@@ -93,7 +96,7 @@ export function addSteamApp(request, response){
     saveSteamApp(request.body, callback);
 }
 
-export function fetchSteamApp(request, response){
+export function fetchSteamApp(request, response) {
     let callback = function (steamApp) {
         response.status(200);
         response.json(steamApp);
@@ -101,7 +104,7 @@ export function fetchSteamApp(request, response){
     getSteamApps(request, callback);
 }
 
-export function addGame(request, response){
+export function addGame(request, response) {
     // let newApp = Object.assign({}, request.body),
     let callback = function (newApp) {
         response.status(200);
@@ -110,7 +113,7 @@ export function addGame(request, response){
     saveGame(request.body, callback);
 }
 
-export function fetchGame(request, response){
+export function fetchGame(request, response) {
     let callback = function (steamApp) {
         response.status(200);
         response.json(steamApp);
@@ -118,7 +121,7 @@ export function fetchGame(request, response){
     getGames(request, callback);
 }
 
-export function addCarousel(request, response){
+export function addCarousel(request, response) {
     // let newApp = Object.assign({}, request.body),
     let callback = function (newApp) {
         response.status(200);
@@ -127,7 +130,7 @@ export function addCarousel(request, response){
     saveCarousel(request.body, callback);
 }
 
-export function fetchCarousel(request, response){
+export function fetchCarousel(request, response) {
     let callback = function (steamApp) {
         response.status(200);
         response.json(steamApp);
@@ -135,3 +138,44 @@ export function fetchCarousel(request, response){
     getCarousels(request, callback);
 }
 
+export function addGameDetail(request, response) {
+    // let newApp = Object.assign({}, request.body),
+    let callback = function (newApp) {
+        response.status(200);
+        response.json(newApp);
+    };
+    saveGameDetail(request.body, callback);
+}
+
+export function fetchGameDetail(request, response) {
+    let callback = function (gd) {
+        let gamedetail = gd;
+        let cb = function (game) {
+            if (!gamedetail || gamedetail ==null) {
+                response.status(400);
+                response.json({
+                    "error" : "no such game"
+                });
+            } else {
+                response.status(200);
+                let result = new Object();
+                result.img = game.img;
+                result.img1 = game.img1;
+                result.img2 = game.img2;
+                result.img3 = game.img3;
+                result.title = game.title;
+                result.detail = game.detail;
+                result.platform = game.platform;
+                result.price = game.price;
+                result.background = gamedetail.background;
+                result.recommend = gamedetail.recommend;
+                response.json(result);
+            }
+        };
+        getGameById(request.params._id, cb);
+    };
+
+
+
+    getGameDetail(request.params._id, callback);
+}

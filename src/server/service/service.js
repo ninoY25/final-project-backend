@@ -4,6 +4,7 @@ const User = mongoose.model('user');
 const SteamApp = mongoose.model('steamApps');
 const Carousel = mongoose.model('carousel');
 const Game = mongoose.model('game');
+const GameDetail = mongoose.model('gamedetail');
 
 /**
  * Throws error if error object is present.
@@ -114,6 +115,14 @@ export function getGames(requestBody, callback) {
     Game.find({}, resultCallback);
 }
 
+export function getGameById(id, callback) {
+    let resultCallback = function (error, apps) {
+        throwError(error);
+        callback(apps);
+    }
+    Game.findById(id, resultCallback);
+}
+
 export function saveGame(app, callback) {
 
     let newApps = [];
@@ -147,3 +156,23 @@ export function saveCarousel(app, callback) {
     }
     Carousel.collection.insertMany(newApps, resultCallback);
 }
+
+
+export function getGameDetail(gameid, callback) {
+    let resultCallback = function (err, gameDetail) {
+        throwError(err);
+        callback(gameDetail);
+    }
+    GameDetail.findOne({
+        gameid: gameid
+    }, resultCallback);
+}
+
+export function saveGameDetail(detail, callback) {
+    let newDetail = new GameDetail(detail),
+        resultCallback = function (err, detail) {
+            throwError(err);
+            callback(detail);
+        };
+    newDetail.save(resultCallback);
+};
