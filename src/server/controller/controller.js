@@ -6,7 +6,11 @@ import {
     saveUser,
     getUserById,
     saveSteamApp,
-    getSteamApps
+    getSteamApps,
+    saveGame,
+    getGames,
+    saveCarousel,
+    getCarousels
 } from '../service/service.js';
 
 export function list(request, response) {
@@ -95,5 +99,39 @@ export function fetchSteamApp(request, response){
         response.json(steamApp);
     };
     getSteamApps(request, callback);
+}
+
+export function addGame(request, response){
+    // let newApp = Object.assign({}, request.body),
+    let callback = function (newApp) {
+        response.status(200);
+        response.json(newApp);
+    };
+    saveGame(request.body, callback);
+}
+
+export function fetchGame(request, response){
+    let callback = function (steamApp) {
+        response.status(200);
+        response.json(steamApp);
+    };
+    getGames(request, callback);
+}
+
+export function addCarousel(request, response){
+    // let newApp = Object.assign({}, request.body),
+    let callback = function (newApp) {
+        response.status(200);
+        response.json(newApp);
+    };
+    saveCarousel(request.body, callback);
+}
+
+export function fetchCarousel(request, response){
+    let callback = function (steamApp) {
+        response.status(200);
+        response.json(steamApp);
+    };
+    getCarousels(request, callback);
 }
 

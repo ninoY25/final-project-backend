@@ -3,7 +3,11 @@ import {
     addUser,
     fetchUser,
     addSteamApp,
-    fetchSteamApp
+    fetchSteamApp,
+    addGame,
+    fetchGame,
+    addCarousel,
+    fetchCarousel
 } from '../controller/controller.js';
 
 export function routes(app) {
@@ -21,4 +25,12 @@ export function routes(app) {
     app.route('/steamApp')
         .post(addSteamApp)
         .get(fetchSteamApp);
+
+    app.route('/game')
+        .post(addGame)
+        .get(fetchGame);
+
+    app.route('/carousel')
+        .post(addCarousel)
+        .get(fetchCarousel);
 };
