@@ -10,7 +10,9 @@ import {
     addCarousel,
     fetchCarousel,
     addGameDetail,
-    fetchGameDetail
+    fetchGameDetail,
+    addReview,
+    fetchReview
 } from '../controller/controller.js';
 
 export function routes(app) {
@@ -45,4 +47,8 @@ export function routes(app) {
     app.route('/carousel')
         .post(addCarousel)
         .get(fetchCarousel);
+
+    app.route('/game/:_id/review')
+        .post(addReview)
+        .get(fetchReview)
 };

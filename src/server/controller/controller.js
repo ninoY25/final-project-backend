@@ -14,7 +14,9 @@ import {
     saveGameDetail,
     getGameDetail,
     getGameById,
-    updateGame
+    updateGame,
+    saveReview,
+    getReview
 } from '../service/service.js';
 
 export function list(request, response) {
@@ -114,12 +116,12 @@ export function addGame(request, response) {
     saveGame(request.body, callback);
 }
 
-export function editGame(request, response){
+export function editGame(request, response) {
     let callback = function (game) {
         response.status(200);
         response.json(game);
     };
-    updateGame(request.params._id,request.body,callback);
+    updateGame(request.params._id, request.body, callback);
 }
 
 export function fetchGame(request, response) {
@@ -143,7 +145,7 @@ export function fetchCarousel(request, response) {
     let callback = function (games) {
         response.status(200);
         let result = [];
-        for (let i =0; i< games.length;i++){
+        for (let i = 0; i < games.length; i++) {
             let resultObject = {};
             resultObject.gameid = games[i]._id;
             resultObject.game = games[i].name;
@@ -174,10 +176,10 @@ export function fetchGameDetail(request, response) {
     let callback = function (gd) {
         let gamedetail = gd;
         let cb = function (game) {
-            if (!gamedetail || gamedetail ==null) {
+            if (!gamedetail || gamedetail == null) {
                 response.status(400);
                 response.json({
-                    "error" : "no such game"
+                    "error": "no such game"
                 });
             } else {
                 response.status(200);
@@ -197,8 +199,53 @@ export function fetchGameDetail(request, response) {
         };
         getGameById(request.params._id, cb);
     };
-
-
-
     getGameDetail(request.params._id, callback);
+}
+
+export function addReview(request, response) {
+    // let newApp = Object.assign({}, request.body),
+    let callback = function (newApp) {
+        response.status(200);
+        response.json(newApp);
+    };
+    saveReview(request.body, callback);
+}
+
+export function fetchReview(request, response) {
+    let callback = function (review) {
+        if (!review || review == null) {
+            response.status(400);
+            response.json({
+                "error": "no such review"
+            });
+            return;
+        }
+
+        let users = [];
+        let flag = 0;
+        let cb = function (user) {
+            flag++;
+            users.push(user);
+            if (flag===review.length){
+                let results =[];
+                for (let i = 0; i < review.length; i++) {
+                    let result = {};
+                    result.username = users[i].username;
+                    result.fullname = users[i].firstName + users[i].lastName;
+                    result.title = review[i].title;
+                    result.content = review[i].content;
+                    result.rate = review[i].rate;   
+                    results.push(result);
+                }
+                response.status(200);
+                response.json(results);
+            }
+        };
+        for (let i = 0; i < review.length; i++) {
+            getUserById(review[i].userid, cb);
+        }
+        
+    };
+
+    getReview(request.params._id, callback);
 }

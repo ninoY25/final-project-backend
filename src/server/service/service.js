@@ -5,6 +5,7 @@ const SteamApp = mongoose.model('steamApps');
 const Carousel = mongoose.model('carousel');
 const Game = mongoose.model('game');
 const GameDetail = mongoose.model('gamedetail');
+const Review = mongoose.model('review');
 
 /**
  * Throws error if error object is present.
@@ -123,12 +124,14 @@ export function getGameById(id, callback) {
     Game.findById(id, resultCallback);
 }
 
-export function updateGame(id,old,callback){
+export function updateGame(id, old, callback) {
     let resultCallback = function (error, apps) {
         throwError(error);
         callback(apps);
     }
-    Game.findOneAndUpdate({"_id": id},old,resultCallback);
+    Game.findOneAndUpdate({
+        "_id": id
+    }, old, resultCallback);
 }
 
 export function saveGame(app, callback) {
@@ -147,7 +150,7 @@ export function saveGame(app, callback) {
 export function getCarousels(requestBody, callback) {
     let resultCallback = function (error, apps) {
         throwError(error);
-        callback(apps.slice(0,5));
+        callback(apps.slice(0, 5));
     }
     // Carousel.find({}, resultCallback);
     Game.find({}, resultCallback);
@@ -186,3 +189,21 @@ export function saveGameDetail(detail, callback) {
     newDetail.save(resultCallback);
 };
 
+export function getReview(gameid, callback) {
+    let resultCallback = function (err, review) {
+        throwError(err);
+        callback(review);
+    }
+    Review.find({
+        gameid: gameid
+    }, resultCallback);
+}
+
+export function saveReview(detail, callback) {
+    let newReview = new Review(detail),
+        resultCallback = function (err, detail) {
+            throwError(err);
+            callback(detail);
+        };
+    newReview.save(resultCallback);
+};
