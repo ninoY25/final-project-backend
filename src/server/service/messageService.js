@@ -2,8 +2,8 @@
 const mongoose = require('mongoose');
 const Message = require('../model/message');
 
-exports.getList = function (target_username) {
-    const promise = Message.find({ $or: [ { to_username: target_username}, { from_username: target_username }] }).exec();
+exports.getList = function (source_username,target_username) {
+    const promise = Message.find({ $or: [ { from_username: source_username , to_username: target_username },  { from_username: target_username , to_username: target_username }] }).exec();
     return promise;
 };
 

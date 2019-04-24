@@ -9,8 +9,9 @@ var pusher = new Pusher({
 });
 
 exports.getMessageListFromUser = function (req, res, next) {
-    const target = req.params.targetUsername;
-    messageService.getList(target).then(
+    const source = req.params.sourceUsername;
+    const target = req.params.targetUserName;
+    messageService.getList(source,target).then(
         docs => {
             console.log(docs);
             if (docs) {
@@ -25,8 +26,10 @@ exports.getMessageListFromUser = function (req, res, next) {
 };
 
 exports.saveMessage = function (req, res, next) {
-    const target = req.params.targetUsername;
+    const source = req.params.sourceUsername;
+    const target = req.params.targetUserName;
     const new_message = Object.assign({}, req.body);
+    new_message.from_username = source;
     new_message.to_username = target;
 
     messageService.save(new_message).then(
