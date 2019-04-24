@@ -207,3 +207,27 @@ export function saveReview(detail, callback) {
         };
     newReview.save(resultCallback);
 };
+
+export function delReview(reviewid, callback) {
+    let resultCallback = function (err, detail) {
+        throwError(err);
+        callback(detail);
+    };
+    Review.deleteOne({_id: reviewid}, resultCallback);
+};
+
+export function updateReview(review,reviewid, callback){
+    let resultCallback = function (err, detail) {
+        throwError(err);
+        callback(detail);
+    };
+    Review.findOneAndUpdate({_id: reviewid},review,resultCallback);
+};
+
+export function delGame(gameid, callback) {
+    let resultCallback = function (err, detail) {
+        throwError(err);
+        callback(detail);
+    };
+    Game.deleteOne({_id: gameid}, resultCallback);
+};

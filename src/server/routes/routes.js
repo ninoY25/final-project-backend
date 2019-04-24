@@ -7,12 +7,15 @@ import {
     addGame,
     editGame,
     fetchGame,
+    deleteGame,
     addCarousel,
     fetchCarousel,
     addGameDetail,
     fetchGameDetail,
     addReview,
-    fetchReview
+    fetchReview,
+    deleteReview,
+    editReview
 } from '../controller/controller.js';
 const friendController = require('../controller/friendController');
 const messageController = require('../controller/messageController');
@@ -38,7 +41,8 @@ export function routes(app) {
         .get(fetchGame);
 
     app.route('/game/:_id')
-        .put(editGame);
+        .put(editGame)
+        .delete(deleteGame);
 
     app.route('/game/detail/:_id')
         .get(fetchGameDetail);
@@ -53,6 +57,10 @@ export function routes(app) {
     app.route('/game/:_id/review')
         .post(addReview)
         .get(fetchReview);
+
+    app.route('/game/:_id/review/:_reviewid')
+        .delete(deleteReview)
+        .put(editReview);
 
 
     app.route('/friend')

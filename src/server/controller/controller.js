@@ -9,6 +9,7 @@ import {
     getSteamApps,
     saveGame,
     getGames,
+    delGame,
     saveCarousel,
     getCarousels,
     saveGameDetail,
@@ -16,7 +17,9 @@ import {
     getGameById,
     updateGame,
     saveReview,
-    getReview
+    getReview,
+    delReview,
+    updateReview
 } from '../service/service.js';
 
 export function list(request, response) {
@@ -221,17 +224,18 @@ export function fetchReview(request, response) {
             return;
         }
 
-        let users = [];
+        let users = new Map();
         let flag = 0;
         let cb = function (user) {
             flag++;
-            users.push(user);
+            users.set(String(user._id),user);
             if (flag===review.length){
                 let results =[];
                 for (let i = 0; i < review.length; i++) {
                     let result = {};
-                    result.username = users[i].username;
-                    result.fullname = users[i].firstName + users[i].lastName;
+                    result._id = review[i]._id;
+                    result.username = users.get(review[i].userid).username;
+                    result.fullname = users.get(review[i].userid).firstName + users.get(review[i].userid).lastName;
                     result.title = review[i].title;
                     result.content = review[i].content;
                     result.rate = review[i].rate;   
@@ -248,4 +252,30 @@ export function fetchReview(request, response) {
     };
 
     getReview(request.params._id, callback);
+}
+
+export function deleteReview(request, response) {
+    // let newApp = Object.assign({}, request.body),
+    let callback = function (newApp) {
+        response.status(200);
+        response.json(newApp);
+    };
+    delReview(request.params._reviewid, callback);
+}
+
+export function editReview(request,response){
+    let callback = function (newApp) {
+        response.status(200);
+        response.json(newApp);
+    };
+    updateReview(request.body,request.params._reviewid, callback);
+}
+
+export function deleteGame(request, response) {
+    // let newApp = Object.assign({}, request.body),
+    let callback = function (newApp) {
+        response.status(200);
+        response.json(newApp);
+    };
+    delGame(request.params._id, callback);
 }
