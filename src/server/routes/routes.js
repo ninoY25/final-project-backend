@@ -14,6 +14,8 @@ import {
     addReview,
     fetchReview
 } from '../controller/controller.js';
+const friendController = require('../controller/friendController');
+const messageController = require('../controller/messageController');
 
 export function routes(app) {
 
@@ -50,5 +52,13 @@ export function routes(app) {
 
     app.route('/game/:_id/review')
         .post(addReview)
-        .get(fetchReview)
+        .get(fetchReview);
+
+
+    app.route('/friend')
+        .get(friendController.getFriendList) //create a user account
+
+    app.route('/chat/:targetUsername')
+        .get(messageController.getMessageListFromUser)
+        .post(messageController.saveMessage)
 };
