@@ -66,7 +66,7 @@ export function routes(app) {
     app.route('/friend')
         .get(friendController.getFriendList) //create a user account
 
-    app.route('/chat/:targetUsername')
+    app.route('/chat/:sourceUsername/:targetUserName')
         .get(messageController.getMessageListFromUser)
         .post(messageController.saveMessage)
 };
